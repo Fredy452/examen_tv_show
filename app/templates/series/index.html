@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% include "includes/nav.html" %}
+
+{% include "includes/messages.html" %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="card-title">{{ session.user['first_name']}} {{ session.user['last_name']}}</h3>
+    <div class="links">
+        <a href="{{ url_for('series_new') }}" class="btn btn-success"><i class="bi bi-file-earmark-plus"></i> Crear</a>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger"><i class="bi bi-box-arrow-left"></i> Salir</a>
+    </div>
+</div>
+<div class="card shadow rounded-2 p-4">
+    <div class="card-body">
+        <div class="col d-flex justify-content-between align-items-center">
+            <h5 class="card-title">Todas las series</h5>
+        </div>
+        <!-- Table section -->
+        <table class="table table-bordered table-striped shadow">
+            <thead>
+                <tr>
+                        <th style="width: 20%;">Titulo</th>
+                        <th style="width: 20%;">Network</th>
+                        <th style="width: 20%;">Estreno</th>
+                        <th style="width: 25%; text-align: center;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for serie in series %}
+                <tr>
+                    <td>{{ serie.title }}</td>
+                    <td> {{ serie.network }} </td>
+                    <td>{{ serie.release_date }}</td>
+                    <td>
+                        <a href="{{ url_for('serie_show', id = serie.id) }}" class="btn btn-success"><i class="bi bi-eye-fill"></i>Ver</a>
+                        {% if session["user"]["id"] == serie.user_id %}
+                        <a href="{{ url_for('serie_edit', id = serie.id) }}" aria-disabled="true" class="btn btn-primary"><i class="bi bi-pencil-square"></i>Editar</a>
+                        <a href="{{ url_for('serie_delete', id = serie.id) }}" class="btn btn-danger"><i class="bi bi-trash-fill"></i>Eliminar</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}

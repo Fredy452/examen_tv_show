@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Log In & Register{% endblock %}
+
+{% include "includes/messages.html" %}
+
+{% block content %}
+
+<div class="col">
+    {% include "auth/register.html" %}
+</div>
+
+<div class="col">
+    {% include "auth/login.html" %}
+</div>
+
+{% endblock %}

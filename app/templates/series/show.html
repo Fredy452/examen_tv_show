@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %} Mostrar {% endblock %}
+
+{% include "includes/nav.html" %}
+
+
+{% block content %}
+<div class="links text-end">
+    <a href="{{ url_for('series') }}" class="btn btn-success m-3"><i class="bi bi-tv-fill"></i> Series</a>
+    <a href="{{ url_for('logout') }}" class="btn btn-danger m-3"><i class="bi bi-box-arrow-left"></i> Salir</a>
+</div>
+<div class="card md-8">
+    <div class="card-body">
+        <!-- reseta section -->
+        <fieldset>
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-6 shadow p-4 rounded">
+                    <!-- Título con estilo -->
+                    <h3 class="card-titlep-2 mb-3">{{ serie.title }}</h3>
+                    <p><strong>Network:</strong> {{ serie.network }}</p>
+                    <p><strong>Lanzamiento:</strong> {{ serie.release_date }}</p>
+                    <p><strong>Descripción:</strong> {{ serie.description }}</p>
+                    <p><strong>Publicado por:</strong> {{ serie.first_name }} {{ serie.last_name }}</p>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+
+
+{% endblock %}
