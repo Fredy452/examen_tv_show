@@ -27,6 +27,7 @@
                         <th style="width: 20%;">Titulo</th>
                         <th style="width: 20%;">Network</th>
                         <th style="width: 20%;">Estreno</th>
+                        <th style="width: 15%;">Like</th>
                         <th style="width: 25%; text-align: center;">Acciones</th>
                 </tr>
             </thead>
@@ -36,6 +37,23 @@
                     <td>{{ serie.title }}</td>
                     <td> {{ serie.network }} </td>
                     <td>{{ serie.release_date }}</td>
+                    <td>
+
+                        {% set user_has_liked = false %}
+
+                        {% for like in likes %}
+                            {% if like.user_id == session.user['id'] and like.series_id == serie.id %}
+                                {% set user_has_liked = true %}
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if user_has_liked %}
+                            <a href="{{ url_for('serie_unlike', user_id=session.user['id'], serie_id=serie.id ) }}">Unlike <i class="bi bi-star-fill"></i></a>
+                        {% else %}
+                            <a href="{{ url_for('serie_like', user_id=session.user['id'], serie_id=serie.id ) }}">Like <i class="bi bi-star"></i></a>
+                        {% endif %}
+
+                    </td>
                     <td>
                         <a href="{{ url_for('serie_show', id = serie.id) }}" class="btn btn-success"><i class="bi bi-eye-fill"></i>Ver</a>
                         {% if session["user"]["id"] == serie.user_id %}

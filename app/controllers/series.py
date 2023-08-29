@@ -23,8 +23,14 @@ def series():
     # for serie in series:
     #     print(serie)
 
-    
-    return render_template('series/index.html', series=series)
+    #Obteniendo like 
+    data = {
+        "id": session['user']['id']
+    }
+    likes = Serie.get_like(data)
+    print(likes)
+
+    return render_template('series/index.html', series=series, likes=likes)
 
 @app.route('/logout/')
 def logout():
@@ -169,23 +175,25 @@ def serie_delete(id):
 
     return redirect(url_for('series'))
 
-# @app.route('/serie/like/<int:user_id>/<int:serie_id>')
-# def serie_like(user_id, serie_id):
-#     """
-#     Funcion para dar like
-#     """
+@app.route('/serie/like/<int:user_id>/<int:serie_id>')
+def serie_like(user_id, serie_id):
+    """
+    Funcion para dar like
+    """
     
-#     data = {
-#         "user_id": user_id,
-#         "serie_id": serie_id
-#     }
-#     Serie.like(data)
+    data = {
+        "user_id": user_id,
+        "serie_id": serie_id
+    }
+
+    flash("Liked serie")
+    Serie.like(data)
 
 
-#     return redirect(url_for('series'))
+    return redirect(url_for('series'))
 
-# @app.route('/serie/unlike/<int:user_id>/<int:serie_id>')
-# def serie_unlike(user_id, serie_id):
+@app.route('/serie/unlike/<int:user_id>/<int:serie_id>')
+def serie_unlike(user_id, serie_id):
 
-#     return redirect(url_for('series'))
+    return redirect(url_for('series'))
 

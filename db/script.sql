@@ -51,6 +51,31 @@ CREATE TABLE IF NOT EXISTS `series_schema`.`series` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `series_schema`.`likes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `series_schema`.`likes` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` INT UNSIGNED NOT NULL,
+  `serie_id` INT UNSIGNED NOT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  INDEX `fk_likes_users1_idx` (`user_id` ASC) VISIBLE,
+  INDEX `fk_likes_series1_idx` (`serie_id` ASC) VISIBLE,
+  CONSTRAINT `fk_likes_users1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `series_schema`.`users` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_likes_series1`
+    FOREIGN KEY (`serie_id`)
+    REFERENCES `series_schema`.`series` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

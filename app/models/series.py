@@ -165,3 +165,20 @@ class Serie:
 
         query = """insert into likes(user_id, serie_id) values(%(user_id)s, %(serie_id)s);"""  # noqa: E501
         return connect_to_mysql().query_db(query, data)
+
+
+    @classmethod
+    def get_like(cls, data: list):
+        """
+        Obtener likes
+        """
+
+        query = """
+                SELECT users.id as user_id, users.first_name, series.id as series_id, series.title
+                FROM users
+                LEFT JOIN likes ON users.id = likes.user_id
+                LEFT JOIN series ON likes.serie_id = series.id
+                WHERE users.id = %(id)s;
+        """  # noqa: E501
+        results = connect_to_mysql().query_db(query, data)
+        return results
